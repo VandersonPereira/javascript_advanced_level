@@ -54,25 +54,24 @@ const Data = (function($){
 
     searchInput.addEventListener('keyup', search);
 
-    function search(event){
+    // Com promisses
+    /*function search(event){
         if (event && event.keyCode === 13) {
-            $.setList([
-                {
-                    full_name: 'Javascript 1',
-                    created_at: '2020-08-25T20:10:50Z',
-                    forks: 15300
-                },
-                {
-                    full_name: 'Javascript 2',
-                    created_at: '2020-07-25T20:10:50Z',
-                    forks: 17888
-                },
-                {
-                    full_name: 'Javascript 3',
-                    created_at: '2018-07-25T20:10:50Z',
-                    forks: 998452
-                }
-            ]);
+            const searchQuery = searchInput.value;
+            fetch(`https://api.github.com/search/repositories?q=${searchQuery}`)
+            .then(response => response.json())
+            .then(response => response.items)
+            .then($.setList);
+        }
+    }*/
+
+    // Com Async Await
+    async function search(event){
+        if (event && event.keyCode === 13) {
+            const searchQuery = searchInput.value;
+            let response = await fetch(`https://api.github.com/search/repositories?q=${searchQuery}`)
+            response = await response.json();
+            $.setList(response.items);
         }
     }
 
